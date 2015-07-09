@@ -1,5 +1,4 @@
 
-
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
 
@@ -10,7 +9,7 @@
 #include <iostream>
 using namespace std;
 template <class T>
-class LinkedList //: public List
+class LinkedList : public List <T>
 {
 private:
     struct node
@@ -24,10 +23,60 @@ public:
         LinkedList ();
         void append (T);
         void remove (T);
-        void print () const;
         void clear ();
         T getNext ();
+        int getLength () const;
+        bool isFull () const;
+        void print () const;
+        bool isEmpty () const;
+        T retrieve (int) const;
+
 };
+template <class T>
+bool LinkedList <T>::retrieve(int element_num) const
+{
+    string error = "Error: element out of bounds.";
+    int counter = 1;
+    //checks to make sure element number is in bounds
+    if (element_num < 0 | getLength() > element_num)
+        throw error;
+
+    while ( counter != element_num)
+
+}
+
+
+
+template <class T>
+bool LinkedList <T>::isEmpty() const
+{
+    if (Head)
+    {
+        return false;
+    }
+    return true;
+}
+
+
+template <class T>
+bool LinkedList <T>::isFull() const
+{
+    return false;
+}
+template <class T>
+int LinkedList <T>::getLength() const
+{
+    node * one = Head;
+    int count = 0;
+    while (one)
+    {
+        one = one->Next;
+        count ++;
+    }
+    return count;
+
+}
+
 template <class T>
 T LinkedList <T>::getNext()
 {
