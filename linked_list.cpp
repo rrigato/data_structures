@@ -1,3 +1,5 @@
+//three problems, retrieve and getNext throw exceptions and the reset
+//which resets the iteration? what does that mean
 
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
@@ -18,12 +20,14 @@ private:
         node * Next;
     };
     node * Head;
+    node * current_position;
 
 public:
         LinkedList ();
         void append (T);
         void remove (T);
         void clear ();
+        void reset();
         T getNext ();
         int getLength () const;
         bool isFull () const;
@@ -32,17 +36,29 @@ public:
         T retrieve (int) const;
 
 };
+
 template <class T>
-bool LinkedList <T>::retrieve(int element_num) const
+void LinkedList <T>::reset()
+{
+    current_position = NULL;
+}
+
+template <class T>
+T LinkedList <T>::retrieve(int element_num) const
 {
     string error = "Error: element out of bounds.";
-    int counter = 1;
+    int counter = 0;
     //checks to make sure element number is in bounds
-    if (element_num < 0 | getLength() > element_num)
+    if (element_num < 0 || getLength() < element_num)
         throw error;
 
+    node * one = Head;
     while ( counter != element_num)
-
+    {
+        one = one->Next;
+        counter++;
+    }
+    return one->value;
 }
 
 
@@ -90,6 +106,7 @@ T LinkedList <T>::getNext()
     Head = Head->Next;
     T First = one->value;
     return First;
+    delete one;
 }
 
 
