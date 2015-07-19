@@ -21,7 +21,40 @@ class OrderedLinkedList : public List
 		void print() const;
 		int length() const;
 		int search(string) const; 
+		//void remove(string);
 };
+/*
+void OrderedLinkedList::remove(string key)
+{
+	int Record_num = 0;
+	Record_num = search(key);
+	if (Record_num == -1)
+		return;
+	int counter = 2;
+	Record * one = Head;
+	Record * two = Head->next;
+	if(Record_num ==0)
+	{
+		Head = Head->next;
+		delete one;
+	}
+	else if (Record_num==1)
+	{
+		one = two->next;
+		delete two;
+	}
+	else
+	{
+		while (counter != Record_num)
+		{
+			one = one->next;
+			two = two->next;
+			counter++;
+		} 
+		one = two->next;
+		delete two;
+	}
+}*/
 int OrderedLinkedList::search(string key) const
 {
 	int element_num = -1;
