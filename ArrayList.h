@@ -133,8 +133,8 @@ ArrayList <T> :: ~ArrayList ()
 template <class T>
 ArrayList <T> :: ArrayList ()
 {
-    array_pointer = new T[50];
-    list_size = 50;
+    array_pointer = new T[25];
+    list_size = 25;
     num_elements = 0;
 }
 
