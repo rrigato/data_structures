@@ -1,0 +1,100 @@
+#include <iostream>
+using namespace std;
+
+class Linked
+{
+	private:
+		struct Node { 
+				int data;
+				 Node* Next;
+			     };
+		Node * Head;
+	public:
+		Linked
+		{
+			Head =0;
+		}
+		~Linked
+		{
+			destroy();
+		}
+		void destroy()
+		{
+			Node * one = Head;
+			while (one)
+			{
+				
+				Head = Head->Next;
+				delete one;
+				one = Head;
+			}
+		}
+		void insert (int key)
+		{
+			Node * newNode = new Node;
+			newNode->data = key;
+			newNode->Next = 0;
+			if (isEmpty())		
+			{	Head = newNode;
+				return;
+			}
+			else if (Head ->data > key)
+			{
+				newNode->Next = Head;
+				Head = newNode;
+				return;
+			}
+			Node * one = Head;
+			Node * two = Head->Next;
+			for(; two && two ->data < key; one = one->Next, two = two->Next);
+			newNode->Next = two;
+			one->Next = newNode; 
+	
+				
+		}
+		bool isEmpty()const
+		{
+			return Head == 0;
+		}
+		bool isFull() const
+		{
+			return false;
+		}
+		void print () const
+		{
+			Node * one = Head;
+			while(one)
+			{
+				cout << one->data << " -> ";
+				one = one->Next;
+			}
+			cout << endl;
+		}
+		void remove ( int target)
+		{
+			Node * one = Head;
+			if (isEmpty())
+				return;
+			else if (Head->data == target)
+			{
+				Head = Head -> Next;
+				delete one;
+				return;
+			}
+			Node * two = Head->Next;
+			for (; two && two->data != target; one = one->Next, two = two->Next);
+			if (two->data == target)
+			{
+				one = two->Next;
+				delete two;
+				return;
+			}
+		}
+		
+};
+
+int main ()
+{
+	Linked test;
+return 0;
+}
