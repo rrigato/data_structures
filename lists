@@ -98,3 +98,76 @@ int main ()
 	Linked test;
 return 0;
 }
+
+
+
+
+
+
+
+
+#include <iostream>
+using namespace std;
+
+class Array
+{
+	int * List;
+	int num_elements;
+	int max;
+	public:
+	Array()
+	{
+		List = new int[5];
+		num_elements =0;
+		max =5;	
+	}
+	void print() const
+	{
+		if (isEmpty())
+			return;
+		for (int i = 0; i <num_elements; i++)
+			cout <<  List[i] << " " ;
+		cout << endl;
+	}
+	void insert (int value)
+	{
+		if (isFull())
+			return;
+		for(int i = num_elements -1; i >=0 && List[i]> value; i--)
+			List[i+1] = List[i];
+		List[i] = value;
+		num_elements++;
+			
+	}
+	void remove (int value)
+	{
+		if (isEmpty())
+			return;
+		int i = 0;
+		for (; i < num_elements && List[i] != value;i ++);
+		if (i >= num_elements)
+			return;
+		for (int z = i; z <num_elements; z++)
+			List[z] = List[z + 1];
+		num_elements --;
+	}
+	~Array()
+	{
+		delete [] List;
+	}
+	bool isEmpty() const
+	{
+		return num_elements == 0;
+	}
+	bool isFull() const
+	{
+		return num_elements == max;
+	}
+	
+};
+
+int main ()
+{
+	Array test;
+return 0;
+}
