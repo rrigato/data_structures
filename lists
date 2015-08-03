@@ -93,11 +93,7 @@ class Linked
 		
 };
 
-int main ()
-{
-	Linked test;
-return 0;
-}
+
 
 
 
