@@ -219,7 +219,57 @@ class Stack
 
 
 
+class Queue
+{
+	int * FIFO;
+	int front;
+	int num_elements;
+	int max;
+	int rear;
+	public:
+	void enqueue(int value)
+	{
+		if (isFull())
+			return;
+		if(rear ==max)
+			rear =0;
+		FIFO [rear] = value;
+		rear++;
+		num_elements++;
 
+	}
+	void dequeue()
+	{
+		if (isEmpty())
+			return;
+		if (top == max)
+			top =0;
+		cout <<FIFO[top] ;
+		top++;
+		num_elements++;
+		
+		
+	}
+	Queue()
+	{
+		FIFO = new int[5];
+		rear = front = num_elements =0;
+		max = 5;
+	}
+	~Queue()
+	{
+		delete [] FIFO;
+	}
+	bool isEmpty() const
+	{
+		return num_elements == 0;
+	}
+	bool isFull() const
+	{
+		return num_elements == max;
+	}
+	
+};
 
 
 
