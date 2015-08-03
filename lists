@@ -166,6 +166,73 @@ class Array
 	
 };
 
+
+
+
+
+
+
+
+
+
+
+class Stack
+{
+	int * LIFO;
+	int top;
+	int num_elements;
+	int max;
+	public:
+	void pop()
+	{
+		if (isEmpty())
+			return;
+		cout <<LIFO[num_elements];
+		
+		num_elements --;
+
+	}
+	void push(int value)
+	{
+		if (isFull())
+			return;
+		LIFO[num_elements] = value;
+		num_elements ++;
+		
+		
+	}
+	Stack()
+	{
+		LIFO = new int[5];
+	}
+	~Stack()
+	{
+		delete [] LIFO;
+	}
+	bool isEmpty() const
+	{
+		return num_elements == 0;
+	}
+	bool isFull() const
+	{
+		return num_elements == max;
+	}
+	
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 int main ()
 {
 	Array test;
