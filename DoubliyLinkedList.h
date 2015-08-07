@@ -13,11 +13,12 @@ class DLinkedList : List
 		Node * next;
 	};
 	Node * Head;
+	Node * current;
 
 	public:
 	DLinkedList ()
 	{
-		Head = NULL;
+		current = Head = NULL;
 	}
 	~DLinkedList()
 	{
@@ -26,7 +27,12 @@ class DLinkedList : List
 	void clear();
 	bool isEmpty() const;
 	bool isFull() const;
-	int insert (int) ;
+	int insert (int);
+	void print () const;
+	int getLength() const;
+	void reset();
+	int getNext (int &);
+	bool find (int) const;
 };
 
 
@@ -71,7 +77,7 @@ int DLinkedList::insert(int value)
 	newNode->next = NULL;
 	if (isEmpty())
 	{
-		Head = newNode;
+		current = Head = newNode;
 		return 0;
 	}
 	if ((Head->data) > value)
@@ -81,11 +87,67 @@ int DLinkedList::insert(int value)
 		Head = newNode;
 		return 0;
 	}
+    Node * one = Head;
 	Node * two = Head->next;
-	for (; two !=NULL && two->data < value;two = two->next);
-	two->prev->next = newNode;
-	newNode->prev = two->prev;
+	for (; two !=NULL && two->data < value; one = one->next, two = two->next);
+	if (two)
+        	two->prev = newNode;
+	one->next = newNode;
+	newNode->prev = one;
 	newNode->next = two;
+
 	return 0;
+}
+
+void DLinkedList::print() const
+{
+    if (isEmpty())
+        return;
+	Node * one = Head;
+	while (one)
+	{
+		cout << one ->data << " " ;
+		one = one->next;
+	}
+    cout << endl;
+}
+
+int DLinkedList::getLength() const
+{
+	Node * one = Head;
+	int length = 0;
+	while (one)
+	{
+		length++;
+		one = one->next;
+	}
+	return length;
+}
+
+void DLinkedList::reset()
+{
+	current = Head;
+}
+
+int DLinkedList::getNext (int & value)
+{
+	if (current ==NULL)
+		return -1;
+
+	value = current->data;
+	current = current->next;
+	if (current ==NULL)
+		current = Head;
+	return 0;
+
+}
+
+bool DLinkedList::find(int value) const
+{
+	Node * one = Head;
+	for (; one && one->data != value; one = one->next);
+	if (one)
+		return true;
+	return false;
 }
 #endif
