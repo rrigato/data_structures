@@ -15,33 +15,77 @@ class DLinkedList : List
 	Node * Head;
 
 	public:
-	DLinkedList () //
+	DLinkedList ()
 	{
 		Head = NULL;
 	}
-	~DLinkedList() //
+	~DLinkedList()
 	{
 		clear();
 	}
-	void clear(); //
-	bool isEmpty() const; // 
+	void clear();
+	bool isEmpty() const;
+	bool isFull() const;
+	int insert (int) ;
 };
+
 
 void DLinkedList::clear()
 {
-	if (isEmpty())
-		return;
-	while(Head->next != NULL)
+	Node * one = NULL;
+	while (Head)
 	{
+		one = Head;
 		Head = Head->next;
-		delete Head->prev;
-		Head->prev = NULL;
+		delete one;
 	}
-	delete Head;
-	Head = NULL;
 }
 bool DLinkedList::isEmpty() const
 {
 	return Head == NULL;
+}
+
+bool DLinkedList::isFull() const
+{
+	Node * newNode;
+	try
+	{
+		newNode = new Node;
+		delete newNode;
+		return false;
+	}
+	catch (bad_alloc Name)
+	{
+		return true;
+	}
+}
+int DLinkedList::insert(int value)
+{
+	if (isFull())
+		return -1;
+	Node * newNode = new Node;
+	if (!newNode)
+		return -1;
+	newNode->data = value;
+	newNode->prev = NULL;
+	newNode->next = NULL;
+	if (isEmpty())
+	{
+		Head = newNode;
+		return 0;
+	}
+	if ((Head->data) > value)
+	{
+		newNode->next = Head;
+		Head->prev = newNode;
+		Head = newNode;
+		return 0;
+	}
+	Node * two = Head->next;
+	for (; two !=NULL && two->data < value;two = two->next);
+	two->prev->next = newNode;
+	newNode->prev = two->prev;
+	newNode->next = two;
+	return 0;
 }
 #endif
