@@ -33,6 +33,8 @@ class DLinkedList : List
 	void reset();
 	int getNext (int &);
 	bool find (int) const;
+	int remove (int);
+	void rprint() const;
 };
 
 
@@ -149,5 +151,48 @@ bool DLinkedList::find(int value) const
 	if (one)
 		return true;
 	return false;
+}
+
+int DLinkedList::remove(int value)
+{
+	if (isEmpty())
+		return -1;
+	if (Head->data == value)
+	{
+		Node * one = Head;
+		Head = Head->next;
+		if (Head)
+			Head->prev = NULL;
+		delete one;
+		return 0;
+	}
+	Node * one = Head;
+	Node * two = Head->next;
+	for(; two && two->data != value; one = one->next, two = two->next);
+	if (two)
+	{
+		one->next = two->next;
+		if (two->next)
+			two->next->prev = one;
+		delete two;
+		return 0;
+	}
+	else
+		return -1;
+}
+
+void DLinkedList::rprint() const
+{
+	if (isEmpty())
+		return;
+	Node * one = Head;
+	while (one->next)
+		one = one->next;
+	while (one)
+	{
+		cout << one->data << " ";
+		one = one->prev;
+	}
+	cout <<endl;
 }
 #endif
