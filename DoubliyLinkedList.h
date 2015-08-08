@@ -20,6 +20,10 @@ class DLinkedList : List
 	{
 		current = Head = NULL;
 	}
+	DLinkedList ( const DLinkedList & f)
+	{
+        *this = f;
+	}
 	~DLinkedList()
 	{
 		clear();
@@ -35,6 +39,30 @@ class DLinkedList : List
 	bool find (int) const;
 	int remove (int);
 	void rprint() const;
+	DLinkedList & operator = (const DLinkedList & f)
+	{
+        Node * one  = f.Head;
+        while (one)
+        {
+            insert(one->data);
+            one = one->next;
+        }
+        return *this;
+    }
+    bool operator < (const DLinkedList & f)
+    {
+        int length1 = getLength();
+        int length2 = f.getLength();
+        return length1 < length2;
+
+    }
+    bool operator ==(const DLinkedList & f)
+    {
+        int length1 = getLength();
+        int length2 = f.getLength();
+        return length1 == length2;
+
+    }
 };
 
 
@@ -79,7 +107,8 @@ int DLinkedList::insert(int value)
 	newNode->next = NULL;
 	if (isEmpty())
 	{
-		current = Head = newNode;
+		 Head = newNode;
+		 current = Head;
 		return 0;
 	}
 	if ((Head->data) > value)
