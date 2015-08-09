@@ -175,17 +175,19 @@ int CLinkedList::getNext (int & value)
 
     value = current->data;
     current = current->next;
-    if (current ==NULL)
-        current = Head;
     return 0;
 
 }
 
 bool CLinkedList::find(int value) const
 {
-    Node * one = Head;
-    for (; one && one->data != value; one = one->next);
-    if (one)
+    if (isEmpty())
+        return false;
+    if (Head->data == value)
+            return true;
+    Node * one = Head->next;
+    for (; one != Head && one->data != value; one = one->next);
+    if (one->data == value)
         return true;
     return false;
 }
@@ -194,42 +196,39 @@ int CLinkedList::remove(int value)
 {
     if (isEmpty())
         return -1;
+    Node * Start = Head;
     if (Head->data == value)
     {
         Node * one = Head;
         Head = Head->next;
-        if (Head)
-            Head->prev = NULL;
+        if (Start == Last)
+                current = Head =Last = NULL;
+        else
+        {
+            Last->next = Head;
+            if (current == one)
+                    current = current->next;
+        }
+
+
         delete one;
         return 0;
     }
     Node * one = Head;
     Node * two = Head->next;
-    for(; two && two->data != value; one = one->next, two = two->next);
-    if (two)
+    for(; two != Head && two->data != value; one = one->next, two = two->next);
+    if (two->data == value)
     {
+
+        if (two == current)
+            current = current->next;
+        if (two == Last)
+            Last = Last->next;
         one->next = two->next;
-        if (two->next)
-            two->next->prev = one;
         delete two;
         return 0;
     }
     else
         return -1;
-}
-
-void CLinkedList::rprint() const
-{
-    if (isEmpty())
-        return;
-    Node * one = Head;
-    while (one->next)
-        one = one->next;
-    while (one)
-    {
-        cout << one->data << " ";
-        one = one->prev;
-    }
-    cout <<endl;
 }
 #endif
