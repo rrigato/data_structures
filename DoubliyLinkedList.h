@@ -18,7 +18,8 @@ class DLinkedList : List
 	public:
 	DLinkedList ()
 	{
-		current = Head = NULL;
+		Head = NULL:
+	//	current = Head = NULL;
 	}
 	DLinkedList ( const DLinkedList & f)
 	{
