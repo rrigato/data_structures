@@ -6,10 +6,10 @@ int main ()
     DLinkedList test;
     cout << test.isEmpty() <<endl;
     int i = 0;
-//    for (; i < 100; i++)
-//    {
-//        cout << test.isFull() << " " ;
-//    }
+////    for (; i < 100; i++)
+////    {
+////        cout << test.isFull() << " " ;
+////    }
     i = 10;
     for (; i >0; i--)
         test.insert(i);
