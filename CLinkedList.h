@@ -9,7 +9,6 @@ class CLinkedList : List
     struct Node
     {
         int data;
-        Node * prev;    //need to delete this
         Node * next;
     };
     Node * Head;
@@ -21,33 +20,25 @@ class CLinkedList : List
     {
         Last = current = Head = NULL;
     }
-    CLinkedList ( const CLinkedList & f)
+    CLinkedList(const CLinkedList & f)
     {
         *this = f;
     }
-    ~CLinkedList()
-    {
-        clear();
-    }
-    void clear();
-    bool isEmpty() const;
-    bool isFull() const;
-    int insert (int);
-    void print () const;
-    int getLength() const;
-    void reset();
-    int getNext (int &);
-    bool find (int) const;
-    int remove (int);
-    void rprint() const;
     CLinkedList & operator = (const CLinkedList & f)
     {
+
         Node * one  = f.Head;
-        while (one)
+        if (f.isEmpty())
+        {
+            Head = current = Last = NULL;
+            return *this;
+        }
+        Node * Start = f.Head;
+        do
         {
             insert(one->data);
             one = one->next;
-        }
+        }while(one !=Start);
         return *this;
     }
     bool operator < (const CLinkedList & f)
@@ -64,6 +55,23 @@ class CLinkedList : List
         return length1 == length2;
 
     }
+
+    ~CLinkedList()
+    {
+        clear();
+    }
+    void clear();
+    bool isEmpty() const;
+    bool isFull() const;
+    int insert (int);
+    void print () const;
+    int getLength() const;
+    void reset();
+    int getNext (int &);
+    bool find (int) const;
+    int remove (int);
+    void rprint() const;
+
 };
 
 
@@ -125,7 +133,7 @@ int CLinkedList::insert(int value)
     }
     Node * one = Head;
     Node * two = Head->next;
-    for (; two !=Head && two->data < value; one = one->next, two = two->next);
+    for (; two !=NULL && two !=Head && two->data < value; one = one->next, two = two->next);
 
     one->next = newNode;
     newNode->next = two;
