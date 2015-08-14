@@ -122,6 +122,7 @@ int CLinkedList::insert(int value)
     {
          Head = newNode;
          current =  Last = Head;
+         newNode->next = Head;
         return 0;
     }
     if ((Head->data) > value)
