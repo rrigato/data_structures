@@ -187,11 +187,36 @@ void LinkedBST :: seek (Node * & r, char value)
 
 void LinkedBST :: destroy(Node * & r)
 {
+    Node * one = NULL;
     if (r->right == NULL && r->left == NULL)
-    {    
+    {
         delete r;
         r = NULL;
-        return;
+
+    }
+    else if (r->right ==NULL && r->left != NULL)
+    {
+        one = r;
+        r = r->left;
+        delete one;
+
+
+    }
+    else if (r->right !=NULL && r->left == NULL)
+    {
+        one = r;
+        r = r->right;
+        delete one;
+    }
+    else
+    {
+        one = r->right;
+        while (one->left != NULL)
+            one = one->left;
+        r->left = one;
+        one = r;
+        r = r->right;
+        delete one;
     }
 }
 
