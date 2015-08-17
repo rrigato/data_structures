@@ -32,8 +32,8 @@ class LBST
  virtual   void postprint( Node* ) const = 0;  // recursively displays tree postorder
    virtual  void insert( Node*&, char ) = 0;     // recursively inserts a node
 virtual    bool search( Node*, char ) const = 0; // recursively finds a node
-/*    void seek( Node*&, char ) = 0;      // searches for node to destroy, then
-   virtual void destroy( Node*& ) = 0; */        // calls this to destroys a node
+ virtual   void seek( Node*&, char ) = 0;      // searches for node to destroy, then
+   virtual void destroy( Node*& ) = 0;         // calls this to destroys a node
     virtual void delTree( Node*& ) = 0;         // destroys tree, call in destructor
 
     public:
@@ -48,7 +48,7 @@ virtual    bool search( Node*, char ) const = 0; // recursively finds a node
     virtual void preprint() const = 0;      // calls preprint( Node* )
    virtual void postprint() const = 0;     // calls postprint( Node* )
     virtual void insert( char ) = 0;        // calls insert( Node*&, char )
-  //  void seek( char ) = 0;          // calls seek( Node*&, char )
+  virtual  void seek( char ) = 0;          // calls seek( Node*&, char )
 virtual    bool search( char ) const = 0;  // calls search( Node*, char )
     virtual bool isEmpty() const = 0;       // empty=true, otherwise false
 };
@@ -65,6 +65,8 @@ class LinkedBST : public LBST
         void postprint(Node *) const;
         void preprint(Node *) const;
         bool search( Node *, char) const;
+        void seek ( Node * &, char);
+        void destroy (Node * & );
     public:
         void insert(char);
         LinkedBST()
@@ -79,6 +81,7 @@ class LinkedBST : public LBST
         bool isEmpty() const;
         void preprint() const;
         bool search (char) const;
+        void seek (char);
 
 };
 void LinkedBST ::insert(Node *& r, char data)
@@ -163,6 +166,33 @@ bool LinkedBST :: search (Node * r, char value) const
 bool LinkedBST :: search(char value) const
 {
     return search (root, value);
+}
+
+void LinkedBST:: seek( char value)
+{
+    seek(root, value);
+}
+
+void LinkedBST :: seek (Node * & r, char value)
+{
+    if (r == NULL)
+        return;
+    else if (r->key == value)
+        destroy(r);
+    else if (r->key < value)
+        seek(r->right, value);
+    else
+        seek(r->left, value);
+}
+
+void LinkedBST :: destroy(Node * & r)
+{
+    if (r->right == NULL && r->left == NULL)
+    {    
+        delete r;
+        r = NULL;
+        return;
+    }
 }
 
 #endif // LINKEDBST_H
