@@ -1,172 +1,133 @@
-
 #ifndef OHASH_H
 #define OHASH_H
+
 #include "Hash.h"
 #include <iostream>
 #include <string.h>
 using namespace std;
-class OrderedLinkedList
+
+class OHash : public Hash
 {
-    protected:
-        struct Record
+    struct Node
+    {
+        string key;
+        Node * next;
+    };
+
+    Node Table[10];
+    int cap;
+    int hash(string);
+    int num_elements;
+    public:
+    OHash()
+    {
+        cap = 10;
+        num_elements = 0;
+
+    }
+    ~OHash()
+    {
+        clear;
+    }
+    bool isFull () const
+    {
+        return false;
+    }
+    bool isEmpty() const
+    {
+            return num_elements == 0;
+    }
+
+    int insert (string value)
+    {
+        if (isFull())
+            return -1;
+        int num = hash(value);
+        if (Table[num].key.empty())
+            {
+                Table[num].key = value;
+                Table[num].next = NULL;
+                num_elements ++;
+            }
+        else if (Table[num].next == NULL)
         {
-            string last;
-            Record * next;
-        };
-        Record * Head;
-    public:
-        OrderedLinkedList();
-        ~OrderedLinkedList();
-        void clear();
-        void insert( string);
-        bool isFull() const;
-        bool isEmpty() const;
-        void print() const;
-        int length() const;
-        int search(string) const;
-        void remove(string);
+            Node * newNode = new Node;
+            newNode->next = NULL;
+            Table[num].next = newNode;
+            newNode->key = value;
+        }
+        else
+        {
+            Node * one = Table[num].next;
+            while(one->next!=NULL)
+            {
+               one = one->next;
+            }
+
+            Node * newNode = new Node;
+            newNode->next = NULL;
+            one->next = newNode;
+            newNode->key = value;
+        }
+
+        return 0;
+    }
+
+    void clear()
+    {
+        if (isEmpty())
+            return;
+        Node * one = NULL;
+        int i = 0;
+        for (; i <10 ; i++)
+        {
+            if (Table[i].key.empty())
+                //do nothing
+            else
+            {
+
+                one = Table[i].next;
+                Node * two  = one;
+                Table[i].key = "";//Makes the string empty
+                Table[i].next = NULL;
+                while(one->next)
+                {
+                    two = one->next;
+                    one->key = "";
+                    one->next = NULL;
+                    delete one;
+
+                    one = two;
+
+                }
+            }
+
+        }
+    }
+
+        if (isEmpty())
+            return;
+        int i = 0;
+        for (; i < 10; i++)
+        {
+            while
+        }
+    }
+//    void base_clear()
+//    {
+//        int i = 0;
+//        for (; i < 10;
+//    }
+
 };
 
-void OrderedLinkedList::remove(string key)
-{
 
- 	if (isEmpty())
-      	  return;
+int OHash::hash (string value)
+{
+    if (value.length()> 9)
+        return 9;
 
-  	 Record * one =NULL;
-
-	if(Head->last ==key)
-	{
-	one = Head;
-        Head = Head->next;
-        delete one;
-	return;
-	}
-	Record * two = NULL;
-	for(one = Head, two =Head->next; two != NULL && two->last !=key; one = one->next, two = two->next);
-	if (two != NULL)
-	{
-		one->next = two->next;
-		delete two;
-		return;
-	}
-
-}
-int OrderedLinkedList::search(string key) const
-{
-    int element_num = 0;
-    Record *one = Head;
-	while(one)
-	{
-		if (one->last == key)
-			return element_num;
-		element_num++;
-		one = one->next;
-	}
-    return -1;
-}
-int OrderedLinkedList::length() const
-{
-    Record * one = Head;
-    int counter = 0;
-    for (; one != NULL; counter++, one = one->next);
-    return counter;
-}
-void OrderedLinkedList::print() const
-{
-    if (!Head)
-       return;
-    Record * one = Head;
-    while(one)
-    {
-        cout << one->last << " ";
-        one = one->next;
-    }
-}
-bool OrderedLinkedList::isEmpty() const
-{
-    return Head ==NULL;
+    return value.length();
 }
 
-bool OrderedLinkedList::isFull() const
-{
-    return false;
-}
-
-void OrderedLinkedList::insert( string last_name)
-{
-    Record * newRecord = new Record;
-    newRecord->last = last_name;
-
-    newRecord->next = NULL;
-    Record * one = Head;
-    if (!Head)
-    {
-
-        Head = newRecord;
-    }
-    else if (Head->last > last_name)
-    {
-        newRecord->next = Head;
-        Head = newRecord;
-    }
-    else
-    {
-        Record * two = Head->next;
-        for(; two != NULL && two->last < last_name; one = one->next, two = two->next);
-
-        one->next = newRecord;
-        newRecord->next = two;
-    }
-}
-
-
-OrderedLinkedList ::OrderedLinkedList()
-{
-    Head = NULL;
-}
-
-OrderedLinkedList :: ~OrderedLinkedList()
-{
-    clear();
-}
-void OrderedLinkedList:: clear()
-{
-    Record * one = Head;
-    while (Head)
-    {
-        Head = Head->next;
-        delete one;
-        one = Head;
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-class OHash : public OrderedLinkedList, Hash
-{
-    private:
-        int hash(string );
-
-    public:
-};
-
-int OHash :: hash (string value)
-{
-    return 2;
-}
-
-
-
-
-
-#endif
+#endif // OHASH_H
