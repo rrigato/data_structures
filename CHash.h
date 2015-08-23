@@ -29,6 +29,8 @@ class OrderedLinkedList
         void remove(string);
         void set_delete(int value)
         {
+            if (Head == NULL)
+                return;
             if (value ==1)
                 Head->safe_delete = true;
             else
@@ -36,6 +38,8 @@ class OrderedLinkedList
         }
         bool get_delete()
         {
+            if (Head == NULL)
+                return false;
             return Head->safe_delete;
         }
 
@@ -199,7 +203,79 @@ class CHash : public OrderedLinkedList, public Hash
         num_elements++;
         return 0;
     }
+    int remove (string value)
+    {
+        int num;
+        num = hash(value);
+        if (Table[num].search(value) == -1 && Table[num].get_delete())
+            return -1;
+        else if (Table[num].search(value) != -1 )
+        {
+                Table[num].remove(value);
+                return 0;
+        }
+        else
+        {
+            int temp = num;
+            do
+            {
+                        temp++;
+                if (temp ==20)
+                        temp =0;
+                if (Table[temp].search(value) != -1)
+                {
+                    Table[temp].remove(value);
+                    return 0;
+                }
 
+
+            }while ( temp != num);
+            return -1;
+        }
+
+    }
+    bool search (string value)
+    {
+        int num;
+        num = hash(value);
+        if (Table[num].get_delete()  && Table[num].isEmpty() )
+            return false;
+
+        if (Table[num].search(value) != -1)
+            return true;
+        int temp;
+        temp = num;
+        do
+        {
+                    temp++;
+            if (temp ==20)
+                    temp =0;
+            if (Table[temp].search(value) != -1)
+                return true;
+
+
+        }while (!Table[temp].isEmpty() && temp != num);
+        return false;
+    }
+    bool isFull() const
+    {
+        return num_elements == cap;
+    }
+    bool isEmpty() const
+    {
+        return 0 == num_elements;
+    }
+    void print () const
+    {
+
+        int i = 0;
+        for (; i < cap; i++)
+        {
+            Table[i].print();
+            if (!Table[i].isEmpty())
+                cout <<endl;
+        }
+    }
 
 };
 
