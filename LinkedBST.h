@@ -1,16 +1,9 @@
-
 #ifndef LINKEDBST_H
 #define LINKEDBST_H
 
-//#include "BST.h"
 #include <iostream>
 #include "LBST.h"
 using namespace std;
-
-
-
-
-
 
 class LinkedBST : public LBST
 {
@@ -41,11 +34,12 @@ class LinkedBST : public LBST
 };
 void LinkedBST ::insert(Node *& r, char data)
 {
-    Node * newNode = new Node;
-    newNode->left = NULL;
-    newNode->right = NULL;
+
     if (r == NULL)
     {
+            Node * newNode = new Node;
+            newNode->left = NULL;
+            newNode->right = NULL;
             r= newNode;
             r->key = data;
     }
@@ -55,8 +49,6 @@ void LinkedBST ::insert(Node *& r, char data)
     }
     else
     {
-
-
         insert(r->left, data);
     }
 }
