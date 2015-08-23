@@ -1,3 +1,7 @@
+//do I even need to deallocate memory by calling clear in derieved class
+// calling const in a non const function for search()
+
+
 #ifndef CHASH_H
 #define CHASH_H
 
@@ -212,6 +216,7 @@ class CHash : public OrderedLinkedList, public Hash
         else if (Table[num].search(value) != -1 )
         {
                 Table[num].remove(value);
+                num_elements --;
                 return 0;
         }
         else
@@ -225,6 +230,7 @@ class CHash : public OrderedLinkedList, public Hash
                 if (Table[temp].search(value) != -1)
                 {
                     Table[temp].remove(value);
+                    num_elements--;
                     return 0;
                 }
 
@@ -264,6 +270,13 @@ class CHash : public OrderedLinkedList, public Hash
     bool isEmpty() const
     {
         return 0 == num_elements;
+    }
+    void clear()
+    {
+        int i = 0;
+        for (; i < cap; i++)
+            Table[i].clear();
+        num_elements = 0;
     }
     void print () const
     {
