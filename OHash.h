@@ -228,20 +228,28 @@ int OHash::hash (string value) const
 {
 	int ordinal_sum = 0;
 	char temp;
-	int i = 0, temp;
+	int i = 0, temp2;
 	for (; i != value.length(); i++)
 	{
 		temp = value[i];
 		if (65<= value[i] && value[i] <=90)
 		{
 				temp = value[i];
-				temp = temp -64;
+				temp2 = temp -64;
+				ordinal_sum += temp;
+		}
+		else if(97 <= value[i] && value[i] >= 122)
+		{
+				temp = value[i];
+				temp2 = temp -96;
 				ordinal_sum += temp;
 		}
 		
 	}
+
+
  
-    return value.length();
+    return (ordinal_sum % cap);
 }
  
 #endif // OHASH_H
