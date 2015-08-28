@@ -11,104 +11,122 @@ class PQueue
     int cap;
     void reheapup(int, int);
     int root;
-	int num_elements;
+    int num_elements;
     void reheapdown(int, int);
 
-	void restart()
-	{
-		  int i = 0;
-		    for(; i < cap; i++)
+    void restart()
+    {
+          int i = 0;
+            for(; i < cap; i++)
                 Heap[i] = -1;
             root =0;
-			num_elements = 0;
-	}
-	int enqueue(int key)
-	{
-			if (isFull())
-				return -1;
-			int i = root;
-			for (; Heap[i] != -1 ; i++)
-			{
-				if (i ==20)
-					i =0;
-			}
-			Heap[i] = key;
-			reheapup(root, i);
-			num_elements ++;
-			return 0;
-	}
-	int dequeue(int & key)
-	{
-		if (isEmpty())
-			return -1;
-		int i = root;
-		if (isFull())
-		{
-				if (root ==0)
-					i= 19;
-				else
-					i--;
-				reheapdown(root,i);
-		}
-		else
-		{
-			for (; Heap[i+1] != -1 ; i++)
-				{
-					if (i ==20)
-						i =0;
-				}
-			reheapdown(root,i);
-		}
-		Heap[i] = -1;
-		num_elements --;
-		return 0;
-	}
+            num_elements = 0;
+    }
+
+
     public:
+    int dequeue(int & key)
+        {
+            if (isEmpty())
+                return -1;
+            int i = root;
+            if (isFull())
+            {
+                    if (root ==0)
+                        i= 19;
+                    else
+                        i--;
+                    key = Heap[root];
+                    Heap[root] = Heap[i];
+                    Heap[i] = -1;
+                    if (i ==0)
+                        i = 19;
+                    else
+                        i--;
+                    reheapdown(root,i);
+            }
+            else
+            {
+                for (; Heap[i+1] != -1 ; i++)
+                    {
+                        if (i ==20)
+                            i =0;
+                    }
+                    key = Heap[root];
+                    Heap[root] = Heap[i];
+                    Heap[i] = -1;
+                    if (i ==0)
+                        i = 19;
+                    else
+                        i--;
+                    reheapdown(root,i);
+            }
+            Heap[i] = -1;
+            num_elements --;
+            return 0;
+        }
+
+            int enqueue(int key)
+        {
+                if (isFull())
+                    return -1;
+                int i = root;
+                for (; Heap[i] != -1 ; i++)
+                {
+                    if (i ==20)
+                        i =0;
+                }
+                Heap[i] = key;
+                reheapup(root, i);
+                num_elements ++;
+                return 0;
+        }
         PQueue()
         {
             cap = 20;
-			restart();
+            restart();
         }
-		int insert(int key)
-		{
-			return enqueue(key);
-		}
-		bool isFull() const
-		{
-			return num_elements == cap;
-		}
-		bool isEmpty() const
-		{
-				return num_elements ==0;
-		}
-		void print() const
-		{
-				if (isEmpty())
-					return;
-				int i = root;
-				do
-				{
-					cout << Heap[i]<< " " ;
-					i++;
-					if (i==20)
-						i =0;
-				}while( Heap[i] != -1);
-		}
-	void clear() 
-	{
-		restart();
-	}
-	int remove (int & key)
-	{
-		return dequeue(key);
-	}
+        int insert(int key)
+        {
+            return enqueue(key);
+        }
+        bool isFull() const
+        {
+            return num_elements == cap;
+        }
+        bool isEmpty() const
+        {
+                return num_elements ==0;
+        }
+        void print() const
+        {
+                if (isEmpty())
+                    return;
+                int i = root;
+                do
+                {
+                    cout << Heap[i]<< " " ;
+                    i++;
+                    if (i==20)
+                        i =0;
+                }while( Heap[i] != -1);
+        }
+    void clear()
+    {
+        restart();
+    }
+
+    int remove (int & key)
+    {
+        return dequeue(key);
+    }
 };
- 
- 
+
+
 void PQueue::reheapup(int root,int bottom)
 {
     int parent;
- 
+
     if (bottom > root)
     {
          parent = (bottom-1) / 2;
@@ -121,7 +139,7 @@ void PQueue::reheapup(int root,int bottom)
         }
     }
 }
- 
+
 void PQueue::reheapdown(int root, int bottom)
 {
     int maxChild, rightChild, leftChild;
@@ -152,7 +170,182 @@ void PQueue::reheapdown(int root, int bottom)
             reheapdown(maxChild,bottom);
         }
     }
- 
+
+}
+
+#endif#ifndef PQUEUE_H
+#define PQUEUE_H
+#include <iostream>
+#include "Heap.h"
+using namespace std;
+
+
+class PQueue
+{
+    int Heap[20];
+    int cap;
+    void reheapup(int, int);
+    int root;
+    int num_elements;
+    void reheapdown(int, int);
+
+    void restart()
+    {
+          int i = 0;
+            for(; i < cap; i++)
+                Heap[i] = -1;
+            root =0;
+            num_elements = 0;
+    }
+
+
+    public:
+    int dequeue(int & key)
+        {
+            if (isEmpty())
+                return -1;
+            int i = root;
+            if (isFull())
+            {
+                    if (root ==0)
+                        i= 19;
+                    else
+                        i--;
+                    key = Heap[root];
+                    Heap[root] = Heap[i];
+                    Heap[i] = -1;
+                    if (i ==0)
+                        i = 19;
+                    else
+                        i--;
+                    reheapdown(root,i);
+            }
+            else
+            {
+                for (; Heap[i+1] != -1 ; i++)
+                    {
+                        if (i ==20)
+                            i =0;
+                    }
+                    key = Heap[root];
+                    Heap[root] = Heap[i];
+                    Heap[i] = -1;
+                    if (i ==0)
+                        i = 19;
+                    else
+                        i--;
+                    reheapdown(root,i);
+            }
+            Heap[i] = -1;
+            num_elements --;
+            return 0;
+        }
+
+            int enqueue(int key)
+        {
+                if (isFull())
+                    return -1;
+                int i = root;
+                for (; Heap[i] != -1 ; i++)
+                {
+                    if (i ==20)
+                        i =0;
+                }
+                Heap[i] = key;
+                reheapup(root, i);
+                num_elements ++;
+                return 0;
+        }
+        PQueue()
+        {
+            cap = 20;
+            restart();
+        }
+        int insert(int key)
+        {
+            return enqueue(key);
+        }
+        bool isFull() const
+        {
+            return num_elements == cap;
+        }
+        bool isEmpty() const
+        {
+                return num_elements ==0;
+        }
+        void print() const
+        {
+                if (isEmpty())
+                    return;
+                int i = root;
+                do
+                {
+                    cout << Heap[i]<< " " ;
+                    i++;
+                    if (i==20)
+                        i =0;
+                }while( Heap[i] != -1);
+        }
+    void clear()
+    {
+        restart();
+    }
+
+    int remove (int & key)
+    {
+        return dequeue(key);
+    }
+};
+
+
+void PQueue::reheapup(int root,int bottom)
+{
+    int parent;
+
+    if (bottom > root)
+    {
+         parent = (bottom-1) / 2;
+        if (Heap[parent] < Heap[ bottom])
+        {
+            int temp = Heap [parent];
+            Heap[parent] = Heap[bottom];
+            Heap[bottom] = temp;
+            reheapup(root, parent);
+        }
+    }
+}
+
+void PQueue::reheapdown(int root, int bottom)
+{
+    int maxChild, rightChild, leftChild;
+    leftChild = 2*root +1;
+    rightChild = 2* root +2;
+    if (leftChild <= bottom )
+    {
+        if (leftChild == bottom)
+        {
+            maxChild = leftChild;
+        }
+        else
+        {
+            if (Heap[leftChild] <= Heap[rightChild])
+            {
+                maxChild = rightChild;
+            }
+            else
+            {
+                maxChild = rightChild;
+            }
+        }
+        if (Heap[root] < Heap[maxChild])
+        {
+            int temp = Heap [root];
+            Heap[root] = Heap[maxChild];
+            Heap[maxChild] = temp;
+            reheapdown(maxChild,bottom);
+        }
+    }
+
 }
 
 #endif
