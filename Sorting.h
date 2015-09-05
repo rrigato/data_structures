@@ -18,7 +18,7 @@ public:
 
 };
 template <class Z>
-void Sorting<Z>:: merge(Z array_name[], int left_start, int left_end, int right_start, int right_end)
+void Sorting<Z>:: merge(Z  array_name[], int left_start, int left_end, int right_start, int right_end)
 {
     Z temp_array[Max_Items];
     int index = left_start;
@@ -49,11 +49,11 @@ void Sorting<Z>:: merge(Z array_name[], int left_start, int left_end, int right_
     }
 }
 template <class Z>
-void Sorting<Z> :: merge_sort (Z array_name[], int start, int end)
+void Sorting<Z> :: merge_sort (Z  array_name[], int start, int end)
 {
-    if (start == end)
+    if (start < end)
         return;
-    int middle = (end +);
+    int middle = (end + start)/2;
     merge_sort(array_name, start, middle);
     merge_sort(array_name, middle+1, end);
     merge(array_name, start, middle, middle+1, end);
