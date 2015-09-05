@@ -7,7 +7,12 @@ using std:: endl;
 template <class Z>
 class Sorting
 {
+    int Max_Items;
 public:
+    Sorting()
+    {
+        Max_Items =1000;
+    }
     void merge_sort(Z [], int, int);
     void merge(Z [], int, int, int, int);
 
@@ -15,8 +20,9 @@ public:
 template <class Z>
 void Sorting<Z>:: merge(Z array_name[], int left_start, int left_end, int right_start, int right_end)
 {
-    if( array_name[left_end] < array_name[right_start])
-        return;
+    Z temp_array[Max_Items];
+    int index = left_start;
+    int save_first = left_start;
 }
 template <class Z>
 void Sorting<Z> :: merge_sort (Z array_name[], int start, int end)
@@ -25,11 +31,11 @@ void Sorting<Z> :: merge_sort (Z array_name[], int start, int end)
         return;
     int middle = (end +);
     merge_sort(array_name, start, middle);
-    merge_sort(array_name, middle, end);
-    
+    merge_sort(array_name, middle+1, end);
 
 
 
 
+    merge(array_name, start, middle, middle+1, end);
 }
 #endif
