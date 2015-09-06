@@ -15,6 +15,13 @@ int main ()
         i++;
     }
     quickSort(array_name, 0, 29);
+    z = 0;
+    while (z < 30)
+    {
+        cout << array_name[z] << " ";
+        z++;
+    }
+    cin.get();
     return 0;
 }
 
