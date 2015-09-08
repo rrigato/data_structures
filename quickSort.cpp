@@ -3,6 +3,7 @@
 using namespace std;
 void quickSort(double [], int, int);
 void split(double [], int, int, int &, int &);
+int binary(double [], int); //returns element # if found,  -1 if not
 int main ()
 {
     double array_name[30];
@@ -21,8 +22,14 @@ int main ()
         cout << array_name[z] << " ";
         z++;
     }
+    binary(array_name, 30);
     cin.get();
+
     return 0;
+}
+int binary(double array_name[], int length)
+{
+
 }
 
 void quickSort(double array_name[], int first, int last)
