@@ -3,7 +3,7 @@
 using namespace std;
 void quickSort(double [], int, int);
 void split(double [], int, int, int &, int &);
-int binary(double [], int); //returns element # if found,  -1 if not
+int binary(double [], int, double); //returns element # if found,  -1 if not
 int main ()
 {
     double array_name[30];
@@ -22,13 +22,39 @@ int main ()
         cout << array_name[z] << " ";
         z++;
     }
-    binary(array_name, 30);
+        cout <<endl;
+    cout << "Enter a value to search for:" <<endl;
+
+    double value;
+    cin >> value;
+
+    if (binary(array_name, 30, value) != -1)
+        cout << "The value was found." <<endl;
+    else
+        cout << "The value is not in the array." <<endl;
+
+    cin.get();
     cin.get();
 
     return 0;
 }
-int binary(double array_name[], int length)
+int binary(double array_name[], int length, double value)
 {
+    int first, middle, last;
+    last = length -1;
+    first = 0;
+    do
+    {
+        middle = (first + last) / 2;
+        if (array_name[middle] == value)
+            return middle;
+        else if (array_name[middle] < value)
+            last = middle - 1;
+        else
+            first  = middle +1;
+    }
+    while (first < last);
+    return -1;
 
 }
 
