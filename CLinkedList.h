@@ -24,23 +24,8 @@ class CLinkedList : List
     {
         *this = f;
     }
-    CLinkedList & operator = (const CLinkedList & f)
-    {
+    CLinkedList & operator = (const CLinkedList &);
 
-        Node * one  = f.Head;
-        if (f.isEmpty())
-        {
-            Head = current = Last = NULL;
-            return *this;
-        }
-        Node * Start = f.Head;
-        do
-        {
-            insert(one->data);
-            one = one->next;
-        }while(one !=Start);
-        return *this;
-    }
     bool operator < (const CLinkedList & f)
     {
         int length1 = getLength();
@@ -74,7 +59,23 @@ class CLinkedList : List
 
 };
 
+CLinkedList :: CLinkedList & operator = (const CLinkedList & f)
+    {
 
+        Node * one  = f.Head;
+        if (f.isEmpty())
+        {
+            Head = current = Last = NULL;
+            return *this;
+        }
+        Node * Start = f.Head;
+        do
+        {
+            insert(one->data);
+            one = one->next;
+        }while(one !=Start);
+        return *this;
+    }
 void CLinkedList::clear()
 {
     Node * Start = Head;
