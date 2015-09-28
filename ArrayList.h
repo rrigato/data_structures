@@ -17,7 +17,7 @@ private:
 public:
 
     ArrayList ();//
-    ~ArrayList();//
+    ~ArrayList();
     void reset();//
     void append(T); //
     T getNext();
@@ -34,7 +34,7 @@ public:
 template <class T>
 void ArrayList <T> :: clear()
 {
-
+    num_elements = 0;
 }
 
 template <class T>
@@ -128,6 +128,7 @@ template <class T>
 ArrayList <T> :: ~ArrayList ()
 {
     delete [] array_pointer;
+    num_elements = 0;
 }
 
 template <class T>
