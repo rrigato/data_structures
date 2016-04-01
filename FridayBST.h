@@ -19,13 +19,15 @@ class BinaryTree
             };
             Node * root;
             void destroy(Node * & );
-            int insert(int, Node *&);
+            void insert(int, Node *&);
+            void print(Node *) const;
     public:
         BinaryTree();
         ~BinaryTree();
         void destroy();
-        int insert(int);
+        void insert(int);
         bool isFull() const;
+        void print() const;
 
 };//BinaryTree
 
@@ -75,18 +77,19 @@ bool BinaryTree::isFull() const
     }
 }
 
-int BinaryTree::insert(int data)
+void BinaryTree::insert(int data)
 {
-    return insert(data, root);
+    insert(data, root);
 
 }
 
 void BinaryTree::destroy()
 {
     destroy(root);
+    return;
 }
 
-int BinaryTree::insert(int data, Node *& one)
+void BinaryTree::insert(int data, Node *& one)
 {
     if(one == NULL)
     {
@@ -94,9 +97,9 @@ int BinaryTree::insert(int data, Node *& one)
             newNode->value = data;
             newNode ->right = NULL;
             newNode->left = NULL;
-
+            one = newNode;
     }
-    if (one->value > data)
+    else if (one->value > data)
     {
         insert(data, one->left);
     }
@@ -104,6 +107,34 @@ int BinaryTree::insert(int data, Node *& one)
     {
         insert(data, one->right);
     }
+
+    return;
+
+}
+
+void BinaryTree::print() const
+{
+        print(root);
+
+
+}
+
+void BinaryTree::print(Node * one) const
+{
+        if (one == NULL)
+        {
+            return;
+        }
+        if(one->left != NULL)
+        {
+            print(one->left);
+        }
+        if(one->right != NULL)
+        {
+            print(one->right);
+        }
+            cout << " " << one->value;
+
 
 }
 #endif // FRIDAYBST_H
