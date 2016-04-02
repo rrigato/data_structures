@@ -6,11 +6,12 @@ The Binary Search Tree is a common tree based list that is used to reduce search
 The driving principle behind the BST is that the current node is always greater than any nodes value in its left subtree and less than
 any value in its right subtree.
 #####Methods implemented for the Binary Search Tree
-*isFull = checks to see if you can allocate enough memory for a new node
-*isEmpty = checks to see if their are any nodes currently in the BST
-*destroy = removes all nodes from the BST and deallocates the memory they used. Also has a wrapper function for the public interface
-*insert = inserts a value into the BST while maintaining the properties of a BST. Also has a wrapper function for the public interface
-*print = displays all nodes in the BST or nothing if it is empty
+* isFull = checks to see if you can allocate enough memory for a new node
+* isEmpty = checks to see if their are any nodes currently in the BST
+* destroy = removes all nodes from the BST and deallocates the memory they used. Also has a wrapper function for the public interface
+* insert = inserts a value into the BST while maintaining the properties of a BST. Also has a wrapper function for the public interface
+* print = displays all nodes in the BST or nothing if it is empty
+* Remove = removes a node from the list if it matches the value provided. returns 0 if successful, -1 otherwise
 
 [FridayBST.cpp] (https://github.com/rrigato/data_structures/blob/master/FridayBST.cpp)
 Client used for testing the Binary Search tree.
