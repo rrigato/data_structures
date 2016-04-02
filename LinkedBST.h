@@ -1,170 +1,218 @@
-#ifndef LINKEDBST_H
-#define LINKEDBST_H
+#ifndef FRIDAYBST_H
+#define FRIDAYBST_H
 
 #include <iostream>
-#include "LBST.h"
+
 using namespace std;
 
-class LinkedBST : public LBST
+class BinaryTree
 {
     private:
-        void insert(Node *&, char);
-        void delTree(Node *&);
-        void postprint(Node *) const;
-        void preprint(Node *) const;
-        bool search( Node *, char) const;
-        void seek ( Node * &, char);
-        void destroy (Node * & );
+
+
+            struct Node
+            {
+                int value;
+                Node * left;
+                Node * right;
+
+            };
+            Node * root;
+            void destroy(Node * & );
+            void insert(int, Node *&);
+            void print(Node *) const;
+            int findNode(int, Node *&);
+            int Remove(int, Node *&);
+
     public:
-        void insert(char);
-        LinkedBST()
-        {
-            root = NULL;
-        }
-        ~LinkedBST()
-        {
-            delTree(root);
-        }
-        void postprint() const;
-        bool isEmpty() const;
-        void preprint() const;
-        bool search (char) const;
-        void seek (char);
+        BinaryTree();
+        ~BinaryTree();
+        void destroy();
+        void insert(int);
+        bool isFull() const;
+        void print() const;
+        bool isEmpty()const;
+        int Remove(int);
 
-};
-void LinkedBST ::insert(Node *& r, char data)
+};//BinaryTree
+
+BinaryTree::BinaryTree()
 {
+    root = NULL;
+}
 
-    if (r == NULL)
+BinaryTree::~BinaryTree()
+{
+    destroy(root);
+}
+
+void BinaryTree::destroy(Node * & one)
+{
+    if (one == NULL)
+    {
+        return;
+    }
+    if (one->left != NULL)
+    {
+        destroy(one->left);
+    }
+    if (one->right != NULL)
+    {
+        destroy(one->right);
+    }
+    if(one->right != NULL && one->left != NULL)
+    {
+        delete one;
+        one = NULL;
+    }
+
+}
+bool BinaryTree::isFull() const
+{
+    try
+    {
+        Node * newNode;
+        newNode = new Node;
+        delete newNode;
+        return false;
+    }
+    catch(bad_alloc exception)
+    {
+        return true;
+    }
+}
+
+void BinaryTree::insert(int data)
+{
+    if (isFull())
+    {
+        cout << "Error: unable to allocate necessary memory" <<endl;
+        return;
+    }
+    insert(data, root);
+
+}
+
+void BinaryTree::destroy()
+{
+    destroy(root);
+    return;
+}
+
+void BinaryTree::insert(int data, Node *& one)
+{
+    if(one == NULL)
     {
             Node * newNode = new Node;
+            newNode->value = data;
+            newNode ->right = NULL;
             newNode->left = NULL;
-            newNode->right = NULL;
-            r= newNode;
-            r->key = data;
+            one = newNode;
     }
-    else if (r->key < data)
+    else if (one->value > data)
     {
-        insert(r->right, data);
+        insert(data, one->left);
     }
-    else
+    else if(one ->value <= data )
     {
-        insert(r->left, data);
+        insert(data, one->right);
     }
-}
-void LinkedBST :: insert(char data)
-{
-    insert(root, data);
-}
 
-void LinkedBST::delTree(Node *& r)
-{
-    if (r == NULL)
-        return;
-    delTree(r->left);
-    delTree(r->right);
-    delete r;
-}
-
-void LinkedBST::postprint(Node * r) const
-{
-    if (r == NULL)
-        return;
-    postprint(r->left);
-    postprint(r->right);
-    cout << r->key << " ";
 
 }
-void LinkedBST:: postprint() const
+
+void BinaryTree::print() const
 {
-    postprint(root);
+        print(root);
+
+
 }
 
-bool LinkedBST::isEmpty() const
+void BinaryTree::print(Node * one) const
+{
+        if (one == NULL)
+        {
+            return;
+        }
+        if(one->left != NULL)
+        {
+            print(one->left);
+        }
+        if(one->right != NULL)
+        {
+            print(one->right);
+        }
+            cout << " " << one->value;
+
+
+}
+
+bool BinaryTree::isEmpty() const
 {
     return root == NULL;
 }
-void LinkedBST :: preprint() const
+
+int BinaryTree::Remove(int data)
 {
-    preprint(root);
+    return findNode(data, root);
+
 }
 
-void LinkedBST:: preprint(Node * r) const
+int BinaryTree::findNode(int data, Node *& one)
 {
-    if (r == NULL)
-        return;
-    cout << r->key << " ";
-    preprint(r->left);
-    preprint(r->right);
-}
-
-bool LinkedBST :: search (Node * r, char value) const
-{
-    if ( r == NULL)
-        return false;
-    else if (r->key == value)
-        return true;
-    else if (r->key > value)
-        return search(r->left, value);
-    else
-        return search(r->right, value);
-}
-
-bool LinkedBST :: search(char value) const
-{
-    return search (root, value);
-}
-
-void LinkedBST:: seek( char value)
-{
-    seek(root, value);
-}
-
-void LinkedBST :: seek (Node * & r, char value)
-{
-    if (r == NULL)
-        return;
-    else if (r->key == value)
-        destroy(r);
-    else if (r->key < value)
-        seek(r->right, value);
-    else
-        seek(r->left, value);
-}
-
-void LinkedBST :: destroy(Node * & r)
-{
-    Node * one = NULL;
-    if (r->right == NULL && r->left == NULL)
+    if(one == NULL)
     {
-        delete r;
-        r = NULL;
-
+        return -1;
     }
-    else if (r->right ==NULL && r->left != NULL)
+    if (one->value == data)
     {
-        one = r;
-        r = r->left;
+        return Remove(data, one);
+    }
+    else if(one->value < data)
+    {
+        return findNode(data, one->right);
+    }
+    else if(one->value > data)
+    {
+        return findNode(data, one->left);
+    }
+    return -1;
+}
+
+int BinaryTree::Remove(int data, Node *& one)
+{
+
+
+    if(one->left == NULL && one->right == NULL)
+    {
         delete one;
-
-
+        one = NULL;
+        return 0;
     }
-    else if (r->right !=NULL && r->left == NULL)
+    else if(one->left != NULL && one->right == NULL)
     {
-        one = r;
-        r = r->right;
-        delete one;
+        Node *two = one;
+        one = one->left;
+        delete two;
+        two = NULL;
+        return 0;
     }
-    else
+    else if(one->left != NULL && one->right != NULL)
     {
-        one = r->right;
-        while (one->left != NULL)
-            one = one->left;
-        one->left = r->left;
-        one = r;
-        r = r->right;
-        delete one;
+        Node * two = one;
+        Node * three = one->left;
+        one = one->right;
+        while(three->right != NULL)
+        {
+            three = three->right;
+        }
+        three->right = one;
+
+        delete two;
+        two = NULL;
+        return 0;
+
     }
+    return -1;
 }
-
-#endif // LINKEDBST_H
+#endif // FRIDAYBST_H
