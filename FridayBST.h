@@ -28,6 +28,7 @@ class BinaryTree
         void insert(int);
         bool isFull() const;
         void print() const;
+        bool isEmpty()const;
 
 };//BinaryTree
 
@@ -79,6 +80,11 @@ bool BinaryTree::isFull() const
 
 void BinaryTree::insert(int data)
 {
+    if (isFull)
+    {
+        cout << "Error: unable to allocate necessary memory" <<endl;
+        return;
+    }
     insert(data, root);
 
 }
@@ -136,5 +142,10 @@ void BinaryTree::print(Node * one) const
             cout << " " << one->value;
 
 
+}
+
+bool BinaryTree::isEmpty() const
+{
+    return root == NULL;
 }
 #endif // FRIDAYBST_H
